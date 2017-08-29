@@ -40,10 +40,17 @@ my $lines =
 	'US',
 	];
 
+my $ssl_version =  Net::SSLeay::SSLeay();
+my $ssl_version_string = Net::SSLeay::SSLeay_version();
+my $minimum_ssl = 0x10_00_00_00;
+
+note( "Minimum SSL is 1.x and you have [$ssl_version_string]. Some tests will be skipped." )
+	if $ssl_version < $minimum_ssl;
+
 subtest fetch_apple => sub {
 	SKIP: {
+		skip "You need OpenSSL 1.x to fetch from IEEE" if $ssl_version < $minimum_ssl;
 		my $parsed = Net::MAC::Vendor::fetch_oui( $ouis[0] );
-		skip "Can't connect to the IEEE web site for $ouis[0]", 4 unless defined $parsed;
 
 		isa_ok( $parsed, ref [] );
 		foreach my $i ( 0 .. $#$parsed ) {
@@ -53,17 +60,18 @@ subtest fetch_apple => sub {
 	};
 
 subtest fetch_all => sub {
-	foreach my $oui ( @ouis ) {
-		subtest $oui => sub {
-			my $parsed = Net::MAC::Vendor::fetch_oui( $oui );
-			SKIP:{
-				skip "Can't connect to the IEEE web site for $oui. Sometimes that happens.", 4+1 unless defined $parsed;
+	SKIP: {
+		skip "You need OpenSSL 1.x to fetch from IEEE" if $ssl_version < $minimum_ssl;
+
+		foreach my $oui ( @ouis ) {
+			subtest $oui => sub {
+				my $parsed = Net::MAC::Vendor::fetch_oui( $oui );
 				isa_ok( $parsed, ref [] );
 				foreach my $i ( 0 .. $#$parsed ) {
 					is( $parsed->[$i], $lines->[$i], "Line $i matches for $oui" );
 					}
-				}
-			};
+				};
+			}
 		}
 	};
 
