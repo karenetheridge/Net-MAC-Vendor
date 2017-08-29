@@ -295,8 +295,16 @@ sub fetch_oui_from_ieee {
 	}
 
 sub _fetch_oui_from_url {
+	state $min_ssl = 0x10_00_00_00;
 	my( $class, $url ) = @_;
 	my $tries = 0;
+
+	my $ssl_version =  Net::SSLeay::SSLeay();
+	my $ssl_version_string = Net::SSLeay::SSLeay_version();
+
+	if( $ssl_version < $min_ssl ) {
+		carp "Fetching OUI might fail with older OpenSSLs. You have [$ssl_version_string] and may need 1.x";
+		}
 
 	return unless defined $url;
 
@@ -305,8 +313,14 @@ sub _fetch_oui_from_url {
 		unless( $tx->success ) {
 			if( $tries > 3 ) {
 				my $error  = $tx->error;
-				carp "Failed fetching [$url] HTTP status [$error->{code}] message [$error->{message}]";
+				my @messages = (
+					"Failed fetching [$url] HTTP status [$error->{code}]",
+					"message [$error->{message}]"
+					);
+				push @messages, "You may need to upgrade OpenSSL to 1.x. You have [$ssl_version_string]"
+					if $ssl_version < $min_ssl;
 
+				carp join "\n", @messages;
 				return;
 				}
 
