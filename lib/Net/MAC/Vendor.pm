@@ -304,7 +304,9 @@ sub _fetch_oui_from_url {
 		my $tx = __PACKAGE__->ua->get( $url );
 		unless( $tx->success ) {
 			if( $tries > 3 ) {
-				carp "Failed fetching [$url]: " . $tx->res->code;
+				my $error  = $tx->error;
+				carp "Failed fetching [$url] HTTP status [$error->{code}] message [$error->{message}]";
+
 				return;
 				}
 
