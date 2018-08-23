@@ -41,7 +41,7 @@ as a script with a list of MAC addresses as arguments. The module can
 figure it out.
 
 The IEEE moves the location of its OUI file. If they do that again, you
-can set the C<NET_MAC_VENDER_OUI_URL> environment variable to get the new
+can set the C<NET_MAC_VENDOR_OUI_URL> environment variable to get the new
 URL without updating the code.
 
 Here are some of the old URLs, which also flip-flop schemes:
