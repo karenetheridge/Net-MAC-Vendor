@@ -73,8 +73,6 @@ use Exporter qw(import);
 __PACKAGE__->run( @ARGV ) unless caller;
 
 use Carp;
-use Compress::Bzip2 qw(memBunzip);
-use Compress::Zlib  qw(memGunzip);
 use Mojo::URL;
 use Mojo::UserAgent;
 
@@ -477,8 +475,8 @@ sub load_cache {
 			my $tx = __PACKAGE__->ua->get( $url );
 			#say time . " Fetched URL";
 			#say "size is " . $tx->res->headers->header( 'content-length' );
-			($url =~ /\.bz2/) ? memBunzip($tx->res->body) :
-			($url =~ /\.gz/)  ? memGunzip($tx->res->body) :
+			($url =~ /\.bz2/) ? _bunzip($tx->res->body) :
+			($url =~ /\.gz/)  ? _gunzip($tx->res->body) :
 			                    $tx->res->body;
 			}
 		};
@@ -511,6 +509,44 @@ sub load_cache {
 		}
 
 	return 1;
+	}
+
+sub _bunzip {
+	my $content = shift;
+	if (eval { require Compress::Bzip2; 1 }) {
+		return Compress::Bzip2::memBunzip($content);
+		}
+	else {
+		require File::Temp;
+		my ($tempfh, $tempfilename) = File::Temp::tempfile( UNLINK => 1 );
+		binmode $tempfh, ':raw';
+		print $tempfh $content;
+		close $tempfh;
+
+		open my $unzipfh, "bunzip2 --stdout $tempfilename |"
+			or die "cannot pipe to bunzip2: $!";
+		local $/;
+		return <$unzipfh>;
+		}
+	}
+
+sub _gunzip {
+	my $content = shift;
+	if (eval { require Compress::Zlib; 1 }) {
+		return Compress::Zlib::memGunzip($content);
+		}
+	else {
+		require File::Temp;
+		my ($tempfh, $tempfilename) = File::Temp::tempfile( UNLINK => 1 );
+		binmode $tempfh, ':raw';
+		print $tempfh $content;
+		close $tempfh;
+
+		open my $unzipfh, "gunzip --stdout $tempfilename |"
+			or die "cannot pipe to gunzip: $!";
+		local $/;
+		return <$unzipfh>;
+		}
 	}
 
 =back

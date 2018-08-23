@@ -68,11 +68,10 @@ my %WriteMakefile = (
 		'File::Temp'       => '0',
 		'Mojo::URL'        => '0',
 		'Mojo::UserAgent'  => '0',
-		'Compress::Bzip2'  => '0',
-		'Compress::Zlib'   => '0',
 		},
 
 	'META_MERGE' => {
+		dynamic_config => 1,
 		'meta-spec' => { version => 2 },
 		resources => {
 			repository => {
@@ -84,6 +83,14 @@ my %WriteMakefile = (
 				web    => "$github/issues",
 				},
 			homepage => $github,
+			},
+		prereqs => {
+			runtime => {
+				recommends => {
+					'Compress::Bzip2'  => '0',
+					'Compress::Zlib'   => '0',
+					},
+				},
 			},
 		},
 
@@ -104,12 +111,29 @@ sub do_it {
 	eval "use Test::Manifest 1.21"
 		if -e File::Spec->catfile( qw(t test_manifest) );
 
+	if (not parse_args()->{PUREPERL_ONLY}) {
+		$WriteMakefile{PREREQ_PM}{'Compress::Bzip2'} = 0;
+		$WriteMakefile{PREREQ_PM}{'Compress::Zlib'} = 0;
+	}
+
 	my $arguments = arguments();
 	my $minimum_perl = $arguments->{MIN_PERL_VERSION} || '5.008';
 	eval "require $minimum_perl;" or die $@;
 
 	WriteMakefile( %$arguments );
 	}
+
+sub parse_args {
+  # copied from EUMM
+  require ExtUtils::MakeMaker;
+  require Text::ParseWords;
+  ExtUtils::MakeMaker::parse_args(
+    my $tmp = {},
+    Text::ParseWords::shellwords($ENV{PERL_MM_OPT} || ''),
+    @ARGV,
+  );
+  return $tmp->{ARGS} || {};
+}
 
 no warnings;
 __PACKAGE__;
