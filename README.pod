@@ -36,17 +36,8 @@ name instead of the file location:
 
 	% perldoc Net::MAC::Vendor
 
-You can read the documentation and inspect the meta data on one of the
-CPAN web interfaces, such as L<CPAN Search|http://search.cpan.org/dist/Net-MAC-Vendor> or
-L<MetaCPAN|http://www.metacpan.org/module/Net::MAC::Vendor>:
-
-=over 4
-
-=item *	L<http://search.cpan.org/dist/Net-MAC-Vendor>
-
-=item *	L<http://www.metacpan.org/module/Net::MAC::Vendor>
-
-=back
+You can read the documentation and inspect the meta data on
+L<MetaCPAN|http://www.metacpan.org/module/Net::MAC::Vendor>.
 
 The standard module documentation has example uses in the SYNOPSIS
 section, but you can also look in the I<examples/> directory (if it's
