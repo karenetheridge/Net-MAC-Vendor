@@ -45,6 +45,7 @@ Here are some of the old URLs, which also flip-flop schemes:
 	http://standards.ieee.org/regauth/oui/oui.txt
 	https://standards.ieee.org/regauth/oui/oui.txt
 	http://standards-oui.ieee.org/oui.txt
+	http://standards-oui.ieee.org/oui/oui.txt
 
 There are older copies of the OUI file in the GitHub repository.
 
