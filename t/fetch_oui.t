@@ -36,7 +36,7 @@ my $lines =
 	[
 	'Apple, Inc.',
 	'1 Infinite Loop',
-	'CUPERTINO  CA  95014',
+	'Cupertino  CA  95014',
 	'US',
 	];
 
@@ -79,7 +79,7 @@ subtest fetch_all => sub {
 subtest load_from_cache => sub {
 	require Cwd;
 	require File::Spec;
-	my $path = File::Spec->catfile( Cwd::cwd(), "extras/oui-20151113.txt" );
+	my $path = File::Spec->catfile( Cwd::cwd(), "extras/oui-20190326.txt" );
 	diag( "File path is $path" );
 	ok( -e $path, "Cached file exists" );
 
