@@ -68,7 +68,7 @@ use Exporter qw(import);
 
 __PACKAGE__->run( @ARGV ) unless caller;
 
-use Carp;
+use Carp ();
 use Mojo::URL;
 use Mojo::UserAgent;
 
@@ -168,7 +168,7 @@ sub normalize_mac {
 	my $input = uc shift;
 
 	do {
-		carp "Could not normalize MAC [$input]";
+		Carp::carp "Could not normalize MAC [$input]";
 		return
 		} if $input =~ m/[^0-9a-f:-]/i;
 
@@ -179,7 +179,7 @@ sub normalize_mac {
 		( split /[:-]/, $input )[0..2];
 
 	do {
-		carp "Could not normalize MAC [$input]";
+		Carp::carp "Could not normalize MAC [$input]";
 		return
 		} unless @bytes == 3;
 
@@ -231,7 +231,7 @@ sub fetch_oui_from_custom {
 
 	my $html = __PACKAGE__->_fetch_oui_from_url( $url );
 	unless( defined $html ) {
-		carp "Could not fetch data from the IEEE!";
+		Carp::carp "Could not fetch data from the IEEE!";
 		return;
 		}
 
@@ -279,7 +279,7 @@ sub fetch_oui_from_ieee {
 		}
 
 	unless( defined $html ) {
-		carp "Could not fetch data from the IEEE!";
+		Carp::carp "Could not fetch data from the IEEE!";
 		return;
 		}
 
@@ -297,7 +297,7 @@ sub _fetch_oui_from_url {
 	my $ssl_version_string = Net::SSLeay::SSLeay_version();
 
 	if( $ssl_version < $min_ssl ) {
-		carp "Fetching OUI might fail with older OpenSSLs. You have [$ssl_version_string] and may need 1.x";
+		Carp::carp "Fetching OUI might fail with older OpenSSLs. You have [$ssl_version_string] and may need 1.x";
 		}
 
 	return unless defined $url;
@@ -314,7 +314,7 @@ sub _fetch_oui_from_url {
 				push @messages, "You may need to upgrade OpenSSL to 1.x. You have [$ssl_version_string]"
 					if $ssl_version < $min_ssl;
 
-				carp join "\n", @messages;
+				Carp::carp join "\n", @messages;
 				return;
 				}
 
@@ -325,7 +325,7 @@ sub _fetch_oui_from_url {
 
 		my $html = $tx->res->body;
 		unless( defined $html ) {
-			carp "No content in response for [$url]!";
+			Carp::carp "No content in response for [$url]!";
 			return;
 			}
 
@@ -459,7 +459,7 @@ sub load_cache {
 	my $data = do {;
 		if( defined $source ) {
 			unless( -e $source ) {
-				carp "Net::Mac::Vendor cache source [$source] does not exist";
+				Carp::carp "Net::Mac::Vendor cache source [$source] does not exist";
 				return;
 				}
 
@@ -483,7 +483,7 @@ sub load_cache {
 			close $fh;
 			}
 		else { # notify on error, but continue
-			carp "Could not write to '$dest': $!";
+			Carp::carp "Could not write to '$dest': $!";
 			}
 		}
 
