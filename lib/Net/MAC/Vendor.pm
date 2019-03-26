@@ -1,13 +1,9 @@
 package Net::MAC::Vendor;
+# ABSTRACT: Look up the vendor for a MAC
+
 use strict;
 
 use v5.10;
-
-=encoding utf8
-
-=head1 NAME
-
-Net::MAC::Vendor - look up the vendor for a MAC
 
 =head1 SYNOPSIS
 
@@ -601,29 +597,11 @@ sub get_cache_hash { $Cached }
 
 =back
 
+1;
+__END__
+
 =head1 SEE ALSO
 
 L<Net::MacMap>
 
-=head1 SOURCE AVAILABILITY
-
-The source is in Github:
-
-	git://github.com/briandfoy/net-mac-vendor.git
-
-=head1 AUTHOR
-
-brian d foy C<< <bdfoy@cpan.org> >>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright © 2004-2017, brian d foy C<< <bdfoy@cpan.org> >>. All rights
-reserved.
-
-This program is free software; you can redistribute it under the
-Artistic License 2.0. A license file should have come with this
-distribution.
-
 =cut
-
-1;
