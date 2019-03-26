@@ -194,7 +194,7 @@ Looks up the OUI information on the IEEE website, or uses a cached
 version of it. Pass it the result of C<normalize_mac()> and you
 should be fine.
 
-The C<normalize_mac()> function explains the possible formants for
+The C<normalize_mac()> function explains the possible formats for
 MAC.
 
 To avoid multiple calls on the network, use C<load_cache> to preload
@@ -218,7 +218,7 @@ sub fetch_oui {
 Looks up the OUI information from the specified URL or the URL set
 in the C<NET_MAC_VENDOR_OUI_SOURCE> environment variable.
 
-The C<normalize_mac()> function explains the possible formants for
+The C<normalize_mac()> function explains the possible formats for
 MAC.
 
 =cut
@@ -245,7 +245,7 @@ sub fetch_oui_from_custom {
 Looks up the OUI information on the IEEE website. Pass it the result
 of C<normalize_mac()> and you should be fine.
 
-The C<normalize_mac()> function explains the possible formants for
+The C<normalize_mac()> function explains the possible formats for
 MAC.
 
 =cut
