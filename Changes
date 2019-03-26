@@ -43,7 +43,7 @@ Revision history for Perl module Net::MAC::Vendor
 1.24_02 2015-08-08T07:51:40Z
 	* Update for new IEEE URLs. Again.
 
-1.24_01 - Sun Jan 11 07:03:57 2015
+1.24_01   2015-01-11 07:03:57Z
 	* Fix RT #101011: Line endings are now CRLF
 
 1.23 - 2014-11-13
