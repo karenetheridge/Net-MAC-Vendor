@@ -73,7 +73,7 @@ use Carp ();
 use Mojo::URL;
 use Mojo::UserAgent;
 
-our $VERSION = '1.263';
+our $VERSION = '1.264';
 
 =item run( @macs )
 
