@@ -19,7 +19,7 @@ subtest cache_unlinked => sub {
 
 my $connected = do {
 	my $tx = $class->ua->head( Net::MAC::Vendor::oui_url() );
-	$tx->success && $tx->res->code;
+	!$tx->error && $tx->res->code;
 	};
 
 diag 'Did', ( $connected ? '' : ' not' ),

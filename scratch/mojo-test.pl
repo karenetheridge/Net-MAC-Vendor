@@ -12,7 +12,7 @@ my $url = 'https://services13.ieee.org/RST/standards-ra-web/rest/assignments/dow
 
 my $tx = $ua->get( $url );
 
-unless( $tx->success ) {
+if( $tx->error ) {
 	say "Failed fetching [$url]: " . $tx->res->code;
 	say $tx->res->to_string;
 	exit;

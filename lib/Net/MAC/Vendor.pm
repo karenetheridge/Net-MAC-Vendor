@@ -308,7 +308,7 @@ sub _fetch_oui_from_url {
 
 	TRY: {
 		my $tx = __PACKAGE__->ua->get( $url );
-		unless( $tx->success ) {
+		if( $tx->error ) {
 			if( $tries > 3 ) {
 				my $error  = $tx->error;
 				my @messages = (
