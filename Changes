@@ -1,5 +1,6 @@
 Revision history for Perl module Net::MAC::Vendor
 
+{{$NEXT}}
 	* Compress::Bzip2 and Compress::Zlib are now optional prerequisites if
 	PUREPERL_ONLY=1 is specified as a Makefile.PL argument (or e.g. via `cpanm --pureperl`,
 	or PERL_MM_OPT=PUREPERL_ONLY=1 in the environment).
