@@ -2,8 +2,10 @@ package Net::MAC::Vendor;
 # ABSTRACT: Look up the vendor for a MAC
 
 use strict;
+use warnings;
+use 5.010;
 
-use v5.10;
+use Net::SSLeay;
 
 =head1 SYNOPSIS
 
