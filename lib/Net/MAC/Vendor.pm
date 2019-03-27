@@ -168,7 +168,12 @@ only need the first three bytes
 sub normalize_mac {
 	no warnings 'uninitialized';
 
-	my $input = uc shift;
+	my $input = shift;
+
+	return uc($input->as_microsoft)
+	    if ref $input eq 'NetAddr::MAC';
+
+	$input = uc $input;
 
 	do {
 		Carp::carp "Could not normalize MAC [$input]";
