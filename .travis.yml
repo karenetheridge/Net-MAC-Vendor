@@ -26,6 +26,7 @@ before_install:
   - cd $BUILD_DIR
 install:
   - cpan-install --deps
+  - cpan-install IO::Socket::SSL~2.009
 script:
   - perl Makefile.PL
   - make
