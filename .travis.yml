@@ -1,28 +1,32 @@
-sudo: false
-
 language: perl
 perl:
-    - "5.10"
-    - "5.12"
-    - "5.14"
-    - "5.16"
-    - "5.18"
-    - "5.20"
-    - "5.22"
-    - "5.24"
-    - "5.26"
-
+  - blead       # builds perl from git
+  - dev         # latest point release
+  - "5.28"
+  - "5.26"
+  - "5.24"
+  - "5.22"
+  - "5.20"
+  - "5.18"
+  - "5.16"
+  - "5.14"
+  - "5.12"
+  - "5.10"
+env:
+  global:
+    - AUTHOR_TESTING=1
+    - AUTOMATED_TESTING=1
+    - RELEASE_TESTING=0
 before_install:
-    - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
-    - source ~/travis-perl-helpers/init --auto
-    - cpanm -n Devel::Cover::Report::Coveralls
-
+  - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+  - source ~/travis-perl-helpers/init
+  - build-perl
+  - perl -V
+  - build-dist
+  - cd $BUILD_DIR
 install:
-    - cpanm --quiet --installdeps --notest .
-    - cpanm --quiet --notest Devel::Cover::Report::Coveralls
-
+  - cpan-install --deps
 script:
-    - cover -delete && cover -test
-
-after_success:
-    - cover -report coveralls
+  - perl Makefile.PL
+  - make
+  - prove -b -r -s -j$(test-jobs) $(test-files)
