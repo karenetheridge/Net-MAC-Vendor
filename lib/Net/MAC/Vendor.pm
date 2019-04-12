@@ -519,7 +519,7 @@ sub load_cache {
 
 sub _bunzip {
 	my $content = shift;
-	if (eval { require Compress::Bzip2; 1 }) {
+	if (eval { +require Compress::Bzip2; 1 }) {
 		return Compress::Bzip2::memBunzip($content);
 		}
 	else {
@@ -538,7 +538,7 @@ sub _bunzip {
 
 sub _gunzip {
 	my $content = shift;
-	if (eval { require Compress::Zlib; 1 }) {
+	if (eval { +require Compress::Zlib; 1 }) {
 		return Compress::Zlib::memGunzip($content);
 		}
 	else {
