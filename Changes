@@ -1,6 +1,6 @@
 Revision history for Perl module Net::MAC::Vendor
 
-{{$NEXT}}
+1.264     2019-04-12 19:41:33Z
 	* Net::SSLeay added to runtime prerequisites.
 	* Allow $mac parameter to be a NetAddr::MAC object
 

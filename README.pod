@@ -8,7 +8,7 @@ Net::MAC::Vendor - Look up the vendor for a MAC
 
 =head1 VERSION
 
-version 1.263
+version 1.264
 
 =head1 SYNOPSIS
 
@@ -118,6 +118,8 @@ only need the first three bytes
 	0:d:93              # missing leading zero
 
 	:d:93               # missing all leading zeros
+
+The input string can also be a blessed L<NetAddr::MAC> object.
 
 =item fetch_oui( MAC )
 
@@ -268,7 +270,7 @@ brian d foy <bdfoy@cpan.org>
 
 =head1 CONTRIBUTORS
 
-=for stopwords brian d foy Karen Etheridge Frank Maas openstrike
+=for stopwords brian d foy Karen Etheridge Frank Maas openstrike Dean Hamstead
 
 =over 4
 
@@ -287,6 +289,10 @@ Frank Maas <maas.frank@gmail.com>
 =item *
 
 openstrike <git@openstrike.co.uk>
+
+=item *
+
+Dean Hamstead <dean@fragfest.com.au>
 
 =back
 
