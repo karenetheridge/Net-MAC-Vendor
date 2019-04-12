@@ -163,6 +163,8 @@ only need the first three bytes
 
 	:d:93               # missing all leading zeros
 
+The input string can also be a blessed L<NetAddr::MAC> object.
+
 =cut
 
 sub normalize_mac {
