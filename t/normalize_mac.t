@@ -1,5 +1,4 @@
 use Test::More 0.98;
-use NetAddr::MAC;
 
 use_ok( 'Net::MAC::Vendor' );
 
@@ -17,8 +16,11 @@ foreach my $elem ( @Good ) {
 	is( $normalized, $elem->[1], "MAC $$elem[0] is $$elem[1]" );
 	}
 
-is( '00-16-3E-01-01-01', Net::MAC::Vendor::normalize_mac( NetAddr::MAC->new('00:16:3e:01:01:01') ),
-	'NetAddr::MAC objects work ok as argument to normalize_mac()');
+SKIP: {
+    skip 'NetAddr::MAC required for this test' if not eval { +require NetAddr::MAC };
+    is( '00-16-3E-01-01-01', Net::MAC::Vendor::normalize_mac( NetAddr::MAC->new('00:16:3e:01:01:01') ),
+        'NetAddr::MAC objects work ok as argument to normalize_mac()');
+}
 
 {
 no warnings 'uninitialized';
