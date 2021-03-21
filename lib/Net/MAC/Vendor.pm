@@ -473,7 +473,7 @@ sub load_cache {
 				return;
 				}
 
-			do { local( @ARGV, $/ ) = $source; <> }
+			do { local( *ARGV, $/ ); @ARGV = $source; <> }
 			}
 		else {
 			#say time . " Fetching URL";
